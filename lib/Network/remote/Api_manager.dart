@@ -1,6 +1,7 @@
 
 import 'package:http/http.dart' as http;
-import 'package:news_app/model/NewsResponse/NewsModel.dart';
+import 'package:news_app/mode'
+    'l/NewsResponse/NewsModel.dart';
 import 'dart:convert';
 import 'package:news_app/model/sources/SourcesRespons.dart';
 
@@ -10,13 +11,12 @@ class ApiManager {
 
   static Future<SourcesResponse> getSources(String categoryName) async {
     var url = Uri.https(
-        baseUrl, 'v2/top-headlines/sources', {
+      baseUrl, 'v2/top-headlines/sources', {
       'apiKey': key,
       'category': categoryName
     });
     var response = await http.get(url);
     var json = jsonDecode(response.body);
-    print(json);
     var sourcesResponse = SourcesResponse.fromJson(json);
     return sourcesResponse;
   }
@@ -33,20 +33,8 @@ class ApiManager {
     return newsResponse;
   }
 
-  static Future<NewsModel> getNewsWithSource(String categoryName) async {
-    var url = Uri.https(
-        baseUrl, 'v2/top-headlines', {
-      'apiKey': key,
-      'q': categoryName,
-
-    });
-    var response = await http.get(url);
-    var json = jsonDecode(response.body);
-    var newsResponse = NewsModel.fromJson(json);
-    return newsResponse;
-  }
-
   static Future<NewsModel> getSearch(String value) async {
+    print("called api");
     var url = Uri.https(
       baseUrl, 'v2/everything', {
       'apiKey': key,

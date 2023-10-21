@@ -45,7 +45,8 @@ class CategoriesWidget extends StatelessWidget {
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     mainAxisSpacing: 24,
-                    crossAxisSpacing: 20),
+                    crossAxisSpacing: 20,
+                ),
                 itemBuilder: (context, index) =>
                     BuildCategoryWidget(categories[index], index , context),
                 itemCount: categories.length,
@@ -83,11 +84,12 @@ class CategoriesWidget extends StatelessWidget {
                 height: 120,
                 fit: BoxFit.fitHeight,
               ),
-              Text("${category.title}",
+              Text(category.title,
                   style: const TextStyle(
                       color: Colors.white,
                       fontSize: 22,
-                      fontWeight: FontWeight.w400))
+                      fontWeight: FontWeight.w400
+                  )),
             ],
           ),
         ),

@@ -19,7 +19,7 @@ class HomeScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30.0),
             child: IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.search,
                 size: 30,
               ),

@@ -53,7 +53,7 @@ class HomeDrawer extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: (){
-                      provider.changeDrawerItem(SettingsWidget());
+                      provider.changeDrawerItem(const SettingsWidget());
                       Navigator.pop(context);
                     },
                     child: const Row(

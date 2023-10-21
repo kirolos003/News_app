@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/model/sources/Sources.dart';
 
-
 class TabWidget extends StatelessWidget {
   Source source;
   bool isSelected;
@@ -41,6 +40,7 @@ class TabWidget extends StatelessWidget {
       ),
     );
   }
+
   double getTextWidth(String? text, TextStyle textStyle) {
     final TextPainter textPainter = TextPainter(
       text: TextSpan(text: text),
@@ -49,5 +49,4 @@ class TabWidget extends StatelessWidget {
     )..layout(minWidth: 0, maxWidth: double.infinity);
     return textPainter.width;
   }
-
 }

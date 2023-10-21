@@ -22,7 +22,7 @@ Widget defaultButton({
         onPressed: function,
         child: Text(
           text!.toUpperCase(),
-          style: TextStyle(color: Colors.white, fontSize: 20.0),
+          style: const TextStyle(color: Colors.white, fontSize: 20.0),
         ),
       ),
     );
@@ -53,7 +53,7 @@ Widget defaultTextForm({
       onChanged: onchange,
       //onTap: onTap,
       decoration: InputDecoration(
-        hintStyle: TextStyle(color: Colors.grey), // Hint text color
+        hintStyle: const TextStyle(color: Colors.grey), // Hint text color
         labelStyle: TextStyle(
             color: CacheHelper.getData(key: 'isDark') == true
                 ? Colors.white
@@ -71,7 +71,7 @@ Widget defaultTextForm({
         ),
         hintText: hintText,
         // labelText: label,
-        border: UnderlineInputBorder(),
+        border: const UnderlineInputBorder(),
         prefixIcon: pre,
         suffixIcon: suf != null
             ? IconButton(
@@ -96,6 +96,10 @@ void navigateAndFinish(context, widget) => Navigator.pushAndRemoveUntil(
       ),
       (route) => false,
     );
+
+
+
+
 
 
 Widget NewsItemBuilder(Articles article) => Padding(

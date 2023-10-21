@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/Network/remote/Api_manager.dart';
 import 'package:news_app/UI/Categories%20Details/category_details.dart';
+import 'package:news_app/model/NewsResponse/Articles.dart';
 import 'package:news_app/shared/components.dart';
 
 class MainSearchScreen extends StatefulWidget {
@@ -15,29 +16,46 @@ class _MainSearchScreenState extends State<MainSearchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Container(
-        child: Padding(
-          padding: const EdgeInsets.all(25.0),
-          child: Column(
-            children: [
-              TextField(
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.search),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10))),
-                  hintText: "Type anything to search",
-                ),
-                onChanged: (value) {
-                  setState(() {
-                    search = value;
-                    SearchScreen(search: search,);
-                  });
-                },
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: TextField(
+              decoration: const InputDecoration(
+                prefixIcon: Icon(Icons.search),
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
+                hintText: "Type anything to search",
               ),
-              Expanded(child: SearchScreen(search: search)),
-            ],
+              onChanged: (value) {
+                setState(() {
+                  search = value;
+                });
+              },
+            ),
           ),
-        ),
+          Expanded(
+            child: FutureBuilder(
+              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError || snapshot.data!.status == 'error') {
+                  return const Center(child: Text(''));
+                } else {
+                  var searchList =  snapshot.data?.articles;
+                  return Padding(
+                    padding: const EdgeInsets.all(25.0),
+                    child: ListView.builder(
+                      itemBuilder: (context , index) => NewsItemBuilder(searchList[index]),
+                      itemCount: searchList.length
+                    ),
+                  );
+                }
+              },
+              future: ApiManager.getSearch(search),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -55,7 +73,7 @@ class SearchScreen extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError || snapshot.data!.status == 'error') {
-            return Center(child: Text(''));
+            return const Center(child: Text(''));
           } else {
             var searchList = snapshot.data?.articles;
             return BuildCategoryDetailsItem(searchList!);
@@ -64,3 +82,8 @@ class SearchScreen extends StatelessWidget {
     );
   }
 }
+
+Widget BuildCategoryDetailsItem(List<Articles>? articles) => ListView.builder(
+  itemBuilder: (context , index) => NewsItemBuilder(articles![index]),
+  itemCount: articles?.length,
+);
