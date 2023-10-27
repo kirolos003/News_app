@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/UI/screens/news_details/news_details.dart';
 import 'package:news_app/model/NewsResponse/Articles.dart';
 
 import '../Network/local/cache_helper.dart';
@@ -97,51 +98,51 @@ void navigateAndFinish(context, widget) => Navigator.pushAndRemoveUntil(
       (route) => false,
     );
 
-
-
-
-
-
-Widget NewsItemBuilder(Articles article) => Padding(
-  padding: const EdgeInsets.all(15.0),
-  child: Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      ClipRRect(
-        borderRadius: BorderRadius.circular(10),
-        child: Image.network(
-          article.urlToImage??"",
-          width: double.infinity,
-          height: 250,
-          fit: BoxFit.fill,
-        ),
-      ),
-      const SizedBox(
-        height: 5,
-      ),
-      Text(
-        article.author??'',
-        style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 10),
-      ),
-      const SizedBox(
-        height: 5,
-      ),
-      Text(
-        article.title??'',
-        style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
-      ),
-      const SizedBox(
-        height: 5,
-      ),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Text(
-            article.publishedAt??'',
-            style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 13),
+Widget NewsItemBuilder(Articles article , BuildContext context ) => GestureDetector(
+  onTap: (){
+    navigateTo(context, NewsDetailsScreen(article));
+  },
+  child:   Padding(
+    padding: const EdgeInsets.all(15.0),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: Image.network(
+            article.urlToImage??"",
+            width: double.infinity,
+            height: 250,
+            fit: BoxFit.fill,
           ),
-        ],
-      ),
-    ],
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        Text(
+          article.author??'',
+          style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 10),
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        Text(
+          article.title??'',
+          style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Text(
+              article.publishedAt??'',
+              style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 13),
+            ),
+          ],
+        ),
+      ],
+    ),
   ),
 );

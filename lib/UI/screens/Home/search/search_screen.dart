@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/Network/remote/Api_manager.dart';
-import 'package:news_app/UI/Categories%20Details/category_details.dart';
 import 'package:news_app/model/NewsResponse/Articles.dart';
 import 'package:news_app/shared/components.dart';
 
 class MainSearchScreen extends StatefulWidget {
   @override
-  _MainSearchScreenState createState() => _MainSearchScreenState();
+  MainSearchScreenState createState() => MainSearchScreenState();
 }
 
-class _MainSearchScreenState extends State<MainSearchScreen> {
+class MainSearchScreenState extends State<MainSearchScreen> {
   String search = "";
 
   @override
@@ -46,7 +45,7 @@ class _MainSearchScreenState extends State<MainSearchScreen> {
                   return Padding(
                     padding: const EdgeInsets.all(25.0),
                     child: ListView.builder(
-                      itemBuilder: (context , index) => NewsItemBuilder(searchList[index]),
+                      itemBuilder: (context , index) => NewsItemBuilder(searchList[index] , context),
                       itemCount: searchList.length
                     ),
                   );
@@ -84,6 +83,6 @@ class SearchScreen extends StatelessWidget {
 }
 
 Widget BuildCategoryDetailsItem(List<Articles>? articles) => ListView.builder(
-  itemBuilder: (context , index) => NewsItemBuilder(articles![index]),
+  itemBuilder: (context , index) => NewsItemBuilder(articles![index] , context),
   itemCount: articles?.length,
 );

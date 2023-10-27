@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:news_app/Network/remote/Api_manager.dart';
 import 'package:news_app/UI/Categories%20Details/souces_tab.dart';
 import 'package:news_app/UI/screens/Home/categories/category_model.dart';
-import 'package:news_app/shared/components.dart';
 
 class CategoryDetails extends StatelessWidget {
   final Category category;
 
-  CategoryDetails(this.category);
+  const CategoryDetails(this.category, {super.key});
 
   @override
   Widget build(BuildContext context) {

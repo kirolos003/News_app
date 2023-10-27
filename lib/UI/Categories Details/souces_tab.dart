@@ -39,7 +39,7 @@ class SourcesTabsWidgets extends StatelessWidget {
 class BuildCategoryDetailList extends StatelessWidget {
   final String sourceName;
 
-  BuildCategoryDetailList(this.sourceName , { super.key});
+  const BuildCategoryDetailList(this.sourceName , { super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +53,7 @@ class BuildCategoryDetailList extends StatelessWidget {
         } else {
           var newsList = snapshot.data?.articles;
           return ListView.builder(
-            itemBuilder:(context , index) => NewsItemBuilder(newsList![index]),
+            itemBuilder:(context , index) => NewsItemBuilder(newsList![index] , context),
             itemCount: newsList?.length,
           );
         }

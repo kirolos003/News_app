@@ -1,7 +1,6 @@
 
 import 'package:http/http.dart' as http;
-import 'package:news_app/mode'
-    'l/NewsResponse/NewsModel.dart';
+import 'package:news_app/model/NewsResponse/NewsModel.dart';
 import 'dart:convert';
 import 'package:news_app/model/sources/SourcesRespons.dart';
 
@@ -34,7 +33,6 @@ class ApiManager {
   }
 
   static Future<NewsModel> getSearch(String value) async {
-    print("called api");
     var url = Uri.https(
       baseUrl, 'v2/everything', {
       'apiKey': key,
