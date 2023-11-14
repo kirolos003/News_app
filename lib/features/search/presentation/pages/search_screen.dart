@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/Network/remote/Api_manager.dart';
+import 'package:news_app/features/search/presentation/view_model/search_view_model.dart';
 import 'package:news_app/model/NewsResponse/Articles.dart';
 import 'package:news_app/shared/components.dart';
+import 'package:provider/provider.dart';
 
 class MainSearchScreen extends StatefulWidget {
   @override
@@ -60,24 +62,45 @@ class MainSearchScreenState extends State<MainSearchScreen> {
   }
 }
 
-class SearchScreen extends StatelessWidget {
+class SearchScreen extends StatefulWidget {
   String search;
   SearchScreen({required  this.search , Key? key}) : super(key: key);
 
   @override
+  State<SearchScreen> createState() => _SearchScreenState();
+}
+
+class _SearchScreenState extends State<SearchScreen> {
+  SearchScreenViewModel viewModel = SearchScreenViewModel();
+
+  initState() {
+    super.initState();
+    viewModel.getSearch(widget.search);
+  }
+  @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: ApiManager.getSearch(search),
-        builder:(context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
+    return ChangeNotifierProvider(
+        create: (context) => viewModel,
+      child: Consumer<SearchScreenViewModel>(
+        builder: (context , viewModel , child){
+          if(viewModel.showLoading == true) {
             return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError || snapshot.data!.status == 'error') {
-            return const Center(child: Text(''));
+          } else if (viewModel.errorMessage != null) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Error: ${viewModel.errorMessage}'),
+                ElevatedButton(onPressed: () {
+                  viewModel.getSearch(widget.search);
+                }, child: Text('Try Again')),
+              ],
+            );
           } else {
-            var searchList = snapshot.data?.articles;
+            var searchList = viewModel.searchList;
             return BuildCategoryDetailsItem(searchList!);
           }
         },
+      ),
     );
   }
 }

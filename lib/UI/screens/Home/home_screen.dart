@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/UI/screens/Home/home_drawer.dart';
-import 'package:news_app/UI/screens/Home/search/search_screen.dart';
+import 'package:news_app/features/search/presentation/pages/search_screen.dart';
 import 'package:news_app/provider/app_provider.dart';
 import 'package:news_app/shared/components.dart';
 import 'package:provider/provider.dart';
