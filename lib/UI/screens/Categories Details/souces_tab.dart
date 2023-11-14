@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/Network/remote/Api_manager.dart';
-import 'package:news_app/UI/Categories%20Details/source_tab_widget.dart';
+import 'package:news_app/UI/screens/Categories%20Details/source_tab_widget.dart';
 import 'package:news_app/model/sources/Sources.dart';
 import 'package:news_app/provider/app_provider.dart';
 import 'package:news_app/shared/components.dart';

@@ -31,6 +31,14 @@ class NewsDetailsScreen extends StatelessWidget {
                       width: double.infinity,
                       height: 250,
                       fit: BoxFit.fill,
+                      errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
+                        return Image.asset(
+                          "assets/images/Image_not_available.png",
+                          width: double.infinity,
+                          height: 250,
+                          fit: BoxFit.fill,
+                        );
+                      },
                     ),
                   ),
                   const SizedBox(

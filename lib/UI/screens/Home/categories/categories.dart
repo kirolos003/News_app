@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/UI/screens/Home/categories/category_model.dart';
-import 'package:news_app/UI/Categories%20Details/category_details.dart';
 import 'package:news_app/shared/components.dart';
+
+import '../../Categories Details/category_details.dart';
 
 class CategoriesWidget extends StatelessWidget {
   CategoriesWidget({Key? key}) : super(key: key);

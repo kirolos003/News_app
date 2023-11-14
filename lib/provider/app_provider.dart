@@ -1,11 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:news_app/Network/local/cache_helper.dart';
-import 'package:news_app/Network/remote/dio_helper.dart';
 import 'package:news_app/UI/screens/Home/categories/categories.dart';
-import 'package:http/http.dart' as http;
-import 'package:news_app/model/NewsResponse/NewsModel.dart';
 
 
 class AppProvider extends ChangeNotifier {
@@ -53,23 +48,6 @@ class AppProvider extends ChangeNotifier {
     current = index;
     notifyListeners();
   }
-
-  // var searchResponse ;
-  // void getSearch ({
-  //   String? text
-  // })async
-  // {
-  //    const baseUrl = 'newsapi.org';
-  //    const key = '8bc9767c8ffc48d484f0af085e0fc3d4';
-  //   var url = Uri.https(
-  //       baseUrl, 'v2/everything', {
-  //     'apiKey': key,
-  //     'q': text,
-  //   });
-  //   var response = await http.get(url);
-  //   var json = jsonDecode(response.body);
-  //   searchResponse = NewsModel.fromJson(json);
-  // }
 }
 
 

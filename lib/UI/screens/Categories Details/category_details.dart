@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/Network/remote/Api_manager.dart';
-import 'package:news_app/UI/Categories%20Details/souces_tab.dart';
+import 'package:news_app/UI/screens/Categories%20Details/souces_tab.dart';
 import 'package:news_app/UI/screens/Home/categories/category_model.dart';
 
 class CategoryDetails extends StatelessWidget {

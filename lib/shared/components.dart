@@ -98,11 +98,11 @@ void navigateAndFinish(context, widget) => Navigator.pushAndRemoveUntil(
       (route) => false,
     );
 
-Widget NewsItemBuilder(Articles article , BuildContext context ) => GestureDetector(
-  onTap: (){
+Widget NewsItemBuilder(Articles article, BuildContext context) => GestureDetector(
+  onTap: () {
     navigateTo(context, NewsDetailsScreen(article));
   },
-  child:   Padding(
+  child: Padding(
     padding: const EdgeInsets.all(15.0),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -110,24 +110,32 @@ Widget NewsItemBuilder(Articles article , BuildContext context ) => GestureDetec
         ClipRRect(
           borderRadius: BorderRadius.circular(10),
           child: Image.network(
-            article.urlToImage??"",
+            article.urlToImage ?? "",
             width: double.infinity,
             height: 250,
             fit: BoxFit.fill,
+            errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
+              return Image.asset(
+                "assets/images/Image_not_available.png",
+                width: double.infinity,
+                height: 250,
+                fit: BoxFit.fill,
+              );
+            },
           ),
         ),
         const SizedBox(
           height: 5,
         ),
         Text(
-          article.author??'',
+          article.author ?? '',
           style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 10),
         ),
         const SizedBox(
           height: 5,
         ),
         Text(
-          article.title??'',
+          article.title ?? '',
           style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
         ),
         const SizedBox(
@@ -137,7 +145,7 @@ Widget NewsItemBuilder(Articles article , BuildContext context ) => GestureDetec
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Text(
-              article.publishedAt??'',
+              article.publishedAt ?? '',
               style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 13),
             ),
           ],
