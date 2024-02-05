@@ -49,6 +49,7 @@ class BuildCategoryDetailList extends StatefulWidget {
 
 class _BuildCategoryDetailListState extends State<BuildCategoryDetailList> {
   NewsListViewModel viewModel = NewsListViewModel();
+  @override
   initState() {
     viewModel.getNews(widget.sourceName);
   }
@@ -75,7 +76,7 @@ class _BuildCategoryDetailListState extends State<BuildCategoryDetailList> {
                 Text('Error: ${state.error}'),
                 ElevatedButton(onPressed: () {
                   viewModel.getNews(widget.sourceName);
-                }, child: Text('Try Again')),
+                }, child: const Text('Try Again')),
               ],
             );
           }
