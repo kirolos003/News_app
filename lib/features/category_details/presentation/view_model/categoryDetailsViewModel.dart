@@ -17,16 +17,13 @@ class CategoryDetailsViewModel extends ChangeNotifier{
       var response = await ApiManager.getSources(categoryTitle);
       if(response.status == 'error') {
         showLoading = false;
-        print('Error: ${response.message}');
         errorMessage = response.message;
       } else {
         showLoading = false;
-        print('Success: ${response.sources}');
         newsSourcesList = response.sources;
       }
     }catch(e){
       showLoading = false;
-      print(e.toString());
       errorMessage = "There was a problem in the internet connection. Please try again";
     }
     notifyListeners();

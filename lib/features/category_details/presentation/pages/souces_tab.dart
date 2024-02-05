@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:news_app/Network/remote/Api_manager.dart';
 import 'package:news_app/features/category_details/presentation/view_model/newsListViewModel.dart';
 import 'package:news_app/features/category_details/presentation/widgets/source_tab_widget.dart';
 import 'package:news_app/model/sources/Sources.dart';
@@ -25,7 +24,7 @@ class SourcesTabsWidgets extends StatelessWidget {
               },
               isScrollable: true,
               tabs: sources
-                  .map((Source) => TabWidget(Source, sources.indexOf(Source) == provider.current))
+                  .map((source) => TabWidget(source, sources.indexOf(source) == provider.current))
                   .toList()),
           Expanded(
               child: TabBarView(
@@ -40,7 +39,7 @@ class SourcesTabsWidgets extends StatelessWidget {
 class BuildCategoryDetailList extends StatefulWidget {
   final String sourceName;
 
-  BuildCategoryDetailList(this.sourceName , { super.key});
+  const BuildCategoryDetailList(this.sourceName , { super.key});
 
   @override
   State<BuildCategoryDetailList> createState() => _BuildCategoryDetailListState();
@@ -48,6 +47,7 @@ class BuildCategoryDetailList extends StatefulWidget {
 
 class _BuildCategoryDetailListState extends State<BuildCategoryDetailList> {
   NewsListViewModel viewModel = NewsListViewModel();
+  @override
   initState(){
     super.initState();
     viewModel.getNews(widget.sourceName);
@@ -62,8 +62,21 @@ class _BuildCategoryDetailListState extends State<BuildCategoryDetailList> {
               return const Center(child: CircularProgressIndicator());
             }
             if(viewModel.errorMessage != null){
-              return Center(child: Text('Error: ${viewModel.errorMessage}'));
-            }else{
+              return Center(
+                  child: Column(
+                    children: [
+                      Text('Error: ${viewModel.errorMessage}'),
+                      ElevatedButton(onPressed: () {
+                        viewModel.getNews(widget.sourceName);
+                      }, style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(Colors.blue),
+                      ), child: const Text('Try Again') ,
+                      ),
+                    ],
+                  )
+              );
+            }
+            else{
               var newsList = viewModel.newsList;
               return ListView.builder(
                 itemBuilder:(context , index) => NewsItemBuilder(newsList![index] , context),

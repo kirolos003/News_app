@@ -4,7 +4,7 @@ import 'package:news_app/model/NewsResponse/Articles.dart';
 
 class SearchScreenViewModel extends ChangeNotifier{
   String? errorMessage;
-  bool? showLoading = null;
+  bool? showLoading;
   List<Articles>? searchList = [];
 
   getSearch(String searchWord) async{

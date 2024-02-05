@@ -73,6 +73,7 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   SearchScreenViewModel viewModel = SearchScreenViewModel();
 
+  @override
   initState() {
     super.initState();
     viewModel.getSearch(widget.search);
@@ -85,17 +86,19 @@ class _SearchScreenState extends State<SearchScreen> {
         builder: (context , viewModel , child){
           if(viewModel.showLoading == true) {
             return const Center(child: CircularProgressIndicator());
-          } else if (viewModel.errorMessage != null) {
+          }
+          else if (viewModel.errorMessage != null) {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text('Error: ${viewModel.errorMessage}'),
                 ElevatedButton(onPressed: () {
                   viewModel.getSearch(widget.search);
-                }, child: Text('Try Again')),
+                }, child: const Text('Try Again')),
               ],
             );
-          } else {
+          }
+          else {
             var searchList = viewModel.searchList;
             return BuildCategoryDetailsItem(searchList!);
           }

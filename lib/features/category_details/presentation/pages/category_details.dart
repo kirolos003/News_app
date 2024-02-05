@@ -52,12 +52,13 @@ class _CategoryDetailsState extends State<CategoryDetails> {
                     Text('Error: ${viewModel.errorMessage}'),
                     ElevatedButton(onPressed: () {
                       viewModel.getSources(widget.category.title);
-                    }, child: Text('Try Again')),
+                    }, child: const Text('Try Again')),
                   ],
                 ),
               ),
             );
-          }else{
+          }
+          else{
             var sourcesList = viewModel.newsSourcesList;
             return Scaffold(
                 appBar: AppBar(
