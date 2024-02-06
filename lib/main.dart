@@ -1,18 +1,20 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:news_app/Network/local/cache_helper.dart';
-import 'package:news_app/Network/remote/dio_helper.dart';
 import 'package:news_app/UI/screens/Home/home_screen.dart';
 import 'package:news_app/provider/app_provider.dart';
 import 'package:news_app/shared/components.dart';
 import 'package:news_app/style/themes.dart';
 import 'package:provider/provider.dart';
+import 'di/di.dart';
+import 'features/category_details/data/data_sources/local/cache_helper.dart';
+import 'features/category_details/data/data_sources/remote/dio_helper.dart';
 
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await CacheHelper.init();
   DioHelper.init();
+  configureDependencies();
   runApp(ChangeNotifierProvider(
       create: (BuildContext context) => AppProvider(),
       child: const MyApp()

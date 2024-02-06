@@ -1,5 +1,6 @@
 
-import 'package:news_app/model/NewsResponse/Articles.dart';
+
+import 'Articles.dart';
 
 class NewsModel {
   String? status;

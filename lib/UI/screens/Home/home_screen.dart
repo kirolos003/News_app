@@ -17,14 +17,14 @@ class HomeScreen extends StatelessWidget {
         title: const Text('News App'),
         actions: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30.0),
+            padding: const EdgeInsets.only(right: 20.0),
             child: IconButton(
               icon: const Icon(
                 Icons.search,
                 size: 30,
               ),
               onPressed: () {
-                navigateTo(context, MainSearchScreen());
+                navigateTo(context, const MainSearchScreen());
               },
             ),
           )

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:news_app/Network/local/cache_helper.dart';
 import 'package:news_app/UI/screens/Home/categories/categories.dart';
+
+import '../features/category_details/data/data_sources/local/cache_helper.dart';
 
 
 class AppProvider extends ChangeNotifier {

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/UI/screens/news_details/news_details.dart';
-import 'package:news_app/model/NewsResponse/Articles.dart';
-
-import '../Network/local/cache_helper.dart';
+import '../features/category_details/data/data_sources/local/cache_helper.dart';
+import '../features/category_details/data/models/NewsResponse/Articles.dart';
 
 Widget defaultButton({
   Color background = Colors.blue,

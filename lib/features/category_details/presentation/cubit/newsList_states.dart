@@ -1,4 +1,5 @@
-import 'package:news_app/model/NewsResponse/Articles.dart';
+
+import '../../data/models/NewsResponse/Articles.dart';
 
 sealed class NewsStates {}
 

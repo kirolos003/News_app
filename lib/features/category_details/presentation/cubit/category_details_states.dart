@@ -1,4 +1,5 @@
-import 'package:news_app/model/sources/Sources.dart';
+
+import '../../data/models/sources/Sources.dart';
 
 sealed class CategoryDetailsStates {}
 

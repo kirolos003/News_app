@@ -1,18 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app/Network/remote/Api_manager.dart';
 import 'package:news_app/features/search/presentation/cubit/search_modelView.dart';
 import 'package:news_app/features/search/presentation/cubit/search_states.dart';
-import 'package:news_app/model/NewsResponse/Articles.dart';
 import 'package:news_app/shared/components.dart';
+import '../../../category_details/data/models/NewsResponse/Articles.dart';
 
 class MainSearchScreen extends StatefulWidget {
+  const MainSearchScreen({super.key});
+
   @override
-  MainSearchScreenState createState() => MainSearchScreenState();
+  State<MainSearchScreen> createState() => _MainSearchScreenState();
 }
 
-class MainSearchScreenState extends State<MainSearchScreen> {
-  String search = "";
+class _MainSearchScreenState extends State<MainSearchScreen> {
+  late SearchScreenViewModel viewModel;
+
+  @override
+  void initState() {
+    super.initState();
+    viewModel = SearchScreenViewModel();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,31 +37,39 @@ class MainSearchScreenState extends State<MainSearchScreen> {
                 hintText: "Type anything to search",
               ),
               onChanged: (value) {
-                setState(() {
-                  search = value;
-                });
+                viewModel.getSearch(value);
               },
             ),
           ),
           Expanded(
-            child: FutureBuilder(
-              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
+            child: BlocBuilder<SearchScreenViewModel, SearchScreenState>(
+              bloc: viewModel,
+              builder: (context, state) {
+                if (state is SearchScreenLoadingState) {
                   return const Center(child: CircularProgressIndicator());
-                } else if (snapshot.hasError || snapshot.data!.status == 'error') {
-                  return const Center(child: Text(''));
-                } else {
-                  var searchList =  snapshot.data?.articles;
+                } else if (state is SearchScreenSuccessState) {
+                  var searchList = state.search;
                   return Padding(
                     padding: const EdgeInsets.all(25.0),
-                    child: ListView.builder(
-                      itemBuilder: (context , index) => NewsItemBuilder(searchList[index] , context),
-                      itemCount: searchList.length
-                    ),
+                    child: BuildCategoryDetailsItem(searchList),
                   );
+                } else if (state is SearchScreenErrorState) {
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('Error: ${state.error}'),
+                      ElevatedButton(
+                        onPressed: () {
+                          viewModel.getSearch(state.error);
+                        },
+                        child: const Text('Try Again'),
+                      ),
+                    ],
+                  );
+                } else {
+                  return const Center(child: CircularProgressIndicator());
                 }
               },
-              future: ApiManager.getSearch(search),
             ),
           ),
         ],
@@ -64,65 +79,61 @@ class MainSearchScreenState extends State<MainSearchScreen> {
 }
 
 class SearchScreen extends StatefulWidget {
-  String search;
+  final String search;
 
-  SearchScreen({required  this.search , Key? key}) : super(key: key);
+  const SearchScreen({required this.search, Key? key}) : super(key: key);
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  SearchScreenModelView viewModel = SearchScreenModelView();
+  late SearchScreenViewModel viewModel;
+
   @override
   void initState() {
     super.initState();
+    viewModel = SearchScreenViewModel();
     viewModel.getSearch(widget.search);
   }
+
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SearchScreenModelView, SearchScreenState>(
-      bloc : viewModel,
+    return BlocBuilder<SearchScreenViewModel, SearchScreenState>(
+      bloc: viewModel,
       builder: (context, state) {
-        switch(state){
-          case SearchScreenLoadingState():{
-            return const Center(child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CircularProgressIndicator(),
-              ],
-            ));
-          }
-          case SearchScreenSuccessState():{
-            var searchList = state.search;
-            return BuildCategoryDetailsItem(searchList!);
-          }
-          case SearchScreenErrorState() :{
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Error: ${state.error}'),
-                ElevatedButton(onPressed: () {
+        if (state is SearchScreenLoadingState) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        else if (state is SearchScreenSuccessState) {
+          var searchList = state.search;
+          return BuildCategoryDetailsItem(searchList);
+        }
+        else if (state is SearchScreenErrorState) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Error: ${state.error}'),
+              ElevatedButton(
+                onPressed: () {
                   viewModel.getSearch(widget.search);
-                }, child: Text('Try Again')),
-              ],
-            );
-          }
-          case SearchScreenInitialState():{
-            return const Center(child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CircularProgressIndicator(),
-              ],
-            ));
-          }
+                },
+                child: const Text('Try Again'),
+              ),
+            ],
+          );
+        } else {
+          return const Center(child: Column());
         }
       },
     );
   }
 }
 
+// ignore: non_constant_identifier_names
 Widget BuildCategoryDetailsItem(List<Articles>? articles) => ListView.builder(
-  itemBuilder: (context , index) => NewsItemBuilder(articles![index] , context),
-  itemCount: articles?.length,
+  itemBuilder: (context, index) => NewsItemBuilder(articles![index], context),
+  itemCount: articles?.length ?? 0,
 );

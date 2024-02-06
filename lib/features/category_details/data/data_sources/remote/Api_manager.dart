@@ -1,14 +1,17 @@
 
 import 'package:http/http.dart' as http;
-import 'package:news_app/model/NewsResponse/NewsModel.dart';
+import 'package:injectable/injectable.dart';
 import 'dart:convert';
-import 'package:news_app/model/sources/SourcesRespons.dart';
 
+import '../../models/NewsResponse/NewsModel.dart';
+import '../../models/sources/SourcesRespons.dart';
+
+@singleton
 class ApiManager {
   static const baseUrl = 'newsapi.org';
   static const key = '8bc9767c8ffc48d484f0af085e0fc3d4';
 
-  static Future<SourcesResponse> getSources(String categoryName) async {
+   Future<SourcesResponse> getSources(String categoryName) async {
     var url = Uri.https(
       baseUrl, 'v2/top-headlines/sources', {
       'apiKey': key,
@@ -20,7 +23,7 @@ class ApiManager {
     return sourcesResponse;
   }
 
-  static Future<NewsModel> getNews(String categoryName) async {
+   Future<NewsModel> getNews(String categoryName) async {
     var url = Uri.https(
         baseUrl, 'v2/top-headlines', {
       'apiKey': key,
@@ -32,7 +35,7 @@ class ApiManager {
     return newsResponse;
   }
 
-  static Future<NewsModel> getSearch(String value) async {
+   Future<NewsModel> getSearch(String value) async {
     var url = Uri.https(
       baseUrl, 'v2/everything', {
       'apiKey': key,

@@ -1,4 +1,4 @@
-import 'package:news_app/model/NewsResponse/Articles.dart';
+import '../../../category_details/data/models/NewsResponse/Articles.dart';
 
 sealed class SearchScreenState{}
 
