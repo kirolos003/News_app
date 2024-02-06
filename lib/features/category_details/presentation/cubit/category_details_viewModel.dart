@@ -17,6 +17,5 @@ class CategoryDetailsViewModel extends Cubit<CategoryDetailsStates>{
     }catch(error){
       emit(CategoryDetailsError(error.toString()));
     }
-
   }
 }

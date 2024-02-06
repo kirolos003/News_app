@@ -8,7 +8,7 @@ import 'package:news_app/features/category_details/presentation/pages/souces_tab
 class CategoryDetails extends StatefulWidget {
   final Category category;
 
-  CategoryDetails(this.category, {super.key});
+  const CategoryDetails(this.category, {super.key});
 
   @override
   State<CategoryDetails> createState() => _CategoryDetailsState();
@@ -61,7 +61,7 @@ class _CategoryDetailsState extends State<CategoryDetails> {
                       Text('Error: ${state.error}'),
                       ElevatedButton(onPressed: () {
                         viewModel.getSources(widget.category.title);
-                      }, child: Text('Try Again')),
+                      }, child: const Text('Try Again')),
                     ],
                   ),
                 );
